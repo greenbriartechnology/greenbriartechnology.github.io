@@ -1,11 +1,244 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import CallToAction from '../components/CallToAction.astro';
+import { SITE } from '../consts';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const services = [
+  {
+    tag: '01',
+    title: 'Software Architecture',
+    body: 'System design, technical strategy, and architecture reviews that keep complexity from outrunning your roadmap.',
+  },
+  {
+    tag: '02',
+    title: 'Cloud & Platform',
+    body: 'Pragmatic cloud foundations, CI/CD, and infrastructure-as-code that your team can actually operate.',
+  },
+  {
+    tag: '03',
+    title: 'Delivery & Modernization',
+    body: 'Hands-on delivery, legacy modernization, and team enablement — shipping working software, not slide decks.',
+  },
+];
+
+const stats = [
+  { value: '40+', label: 'Engagements delivered' },
+  { value: `${new Date().getFullYear() - SITE.founded} yrs`, label: 'In practice' },
+  { value: '100%', label: 'Senior practitioners' },
+];
 ---
 
 <Layout>
-	<Welcome />
+  <!-- ===== Hero ===== -->
+  <section class="section hero">
+    <div class="container">
+      <p class="eyebrow">{SITE.shortName} Technology Group</p>
+      <h1 class="hero__title">
+        We build software<br />that earns its keep.
+      </h1>
+      <p class="hero__type" aria-live="polite">
+        <span class="hero__prompt">$</span>
+        <span id="typewriter" data-phrases={JSON.stringify([
+          'design resilient systems',
+          'modernize legacy platforms',
+          'ship faster, safely',
+          'mentor engineering teams',
+        ])}></span><span class="cursor" aria-hidden="true"></span>
+      </p>
+      <p class="lead">
+        {SITE.name} is a boutique technology consultancy. We partner with founders
+        and engineering leaders to design, build, and modernize software with
+        clarity, craft, and a bias toward shipping.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="/services">Explore services</a>
+        <a class="btn btn--ghost" href="/contact">Book an intro call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Services ===== -->
+  <section class="section section--tight">
+    <div class="container">
+      <p class="eyebrow">What we do</p>
+      <h2>Three ways we plug in</h2>
+      <div class="grid grid--3" style="margin-top: 2rem;">
+        {
+          services.map((s) => (
+            <article class="card card--accent">
+              <span class="card__tag">// {s.tag}</span>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+            </article>
+          ))
+        }
+      </div>
+      <p style="margin-top:2rem;">
+        <a href="/services">See the full menu of services &rarr;</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== Stats band ===== -->
+  <section class="section--dark stats">
+    <div class="container stats__inner">
+      {
+        stats.map((s) => (
+          <div class="stat">
+            <span class="stat__value">{s.value}</span>
+            <span class="stat__label">{s.label}</span>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ===== Approach teaser ===== -->
+  <section class="section">
+    <div class="container grid grid--2" style="align-items:center;">
+      <div>
+        <p class="eyebrow">How we work</p>
+        <h2>Small team. Senior people. No theater.</h2>
+        <p>
+          Every engagement is led by practitioners who still write code and read
+          logs. We keep teams small, communicate in plain language, and measure
+          ourselves by what makes it to production.
+        </p>
+        <p>
+          <a href="/approach">Read about our approach &rarr;</a>
+        </p>
+      </div>
+      <ul class="checklist">
+        <li>Fixed scope or fixed cadence — your call</li>
+        <li>Working software in weeks, not quarters</li>
+        <li>We leave your team stronger than we found it</li>
+        <li>Honest assessments, even when inconvenient</li>
+      </ul>
+    </div>
+  </section>
+
+  <CallToAction />
 </Layout>
+
+<style>
+  .hero {
+    padding-top: clamp(3rem, 8vw, 6rem);
+  }
+
+  .hero__title {
+    max-width: 18ch;
+  }
+
+  .hero__type {
+    font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__prompt {
+    color: var(--orange);
+    margin-right: 0.6ch;
+    font-weight: 700;
+  }
+
+  #typewriter {
+    color: var(--mint);
+    font-weight: 500;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 0.5rem;
+  }
+
+  .stats__inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
+    padding-block: 2.5rem;
+    text-align: center;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .stat__value {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 700;
+    color: var(--mint-bright);
+  }
+
+  .stat__label {
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9d9a8f;
+  }
+
+  .checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .checklist li {
+    position: relative;
+    padding-left: 1.8rem;
+    color: var(--ink-soft);
+  }
+
+  .checklist li::before {
+    content: '[x]';
+    position: absolute;
+    left: 0;
+    color: var(--mint);
+    font-weight: 700;
+  }
+</style>
+
+<script>
+  // The one true "alive" flourish: a teletype-style typewriter that cycles
+  // through phrases. Respects prefers-reduced-motion and degrades gracefully.
+  const el = document.getElementById('typewriter');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (el) {
+    const phrases: string[] = JSON.parse(el.dataset.phrases ?? '[]');
+
+    if (reduce || phrases.length === 0) {
+      el.textContent = phrases[0] ?? '';
+    } else {
+      let phraseIndex = 0;
+      let charIndex = 0;
+      let deleting = false;
+
+      const tick = () => {
+        const phrase = phrases[phraseIndex];
+        charIndex += deleting ? -1 : 1;
+        el.textContent = phrase.slice(0, charIndex);
+
+        let delay = deleting ? 40 : 70;
+
+        if (!deleting && charIndex === phrase.length) {
+          delay = 1500; // pause at full phrase
+          deleting = true;
+        } else if (deleting && charIndex === 0) {
+          deleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          delay = 350;
+        }
+
+        window.setTimeout(tick, delay);
+      };
+
+      tick();
+    }
+  }
+</script>

@@ -1,0 +1,160 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { SITE } from '../consts';
+---
+
+<Layout
+  title="Contact"
+  description={`Get in touch with ${SITE.name}. Tell us about your project and we'll respond within two business days.`}
+>
+  <PageHeader
+    eyebrow="Contact"
+    title="Let's talk about your system."
+    lead="Tell us what you're working on. We read every message and reply within two business days."
+  />
+
+  <section class="section">
+    <div class="container grid grid--2" style="align-items:start;">
+      <div class="stack">
+        <h2 class="mt-0">Reach us directly</h2>
+        <p>
+          Prefer email? Write to us at
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a> with a few sentences
+          about your project, timeline, and what success looks like.
+        </p>
+        <dl class="contact-meta">
+          <div>
+            <dt>Email</dt>
+            <dd><a href={`mailto:${SITE.email}`}>{SITE.email}</a></dd>
+          </div>
+          <div>
+            <dt>Location</dt>
+            <dd>{SITE.location}</dd>
+          </div>
+          <div>
+            <dt>Response time</dt>
+            <dd>Within 2 business days</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!--
+        Static-friendly form. This posts to a form-handling service so the site
+        can stay fully static on GitHub Pages. Replace the action URL below with
+        your own endpoint (e.g. Formspree: https://formspree.io/f/your-id),
+        or delete the form entirely and rely on the mailto link above.
+      -->
+      <form
+        class="contact-form card"
+        action="https://formspree.io/f/your-form-id"
+        method="POST"
+      >
+        <p class="form-note">
+          <span class="prompt">$</span> send --to greenbriar
+        </p>
+        <label>
+          Name
+          <input type="text" name="name" autocomplete="name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" autocomplete="email" required />
+        </label>
+        <label>
+          Company <span class="optional">(optional)</span>
+          <input type="text" name="company" autocomplete="organization" />
+        </label>
+        <label>
+          How can we help?
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+        <button class="btn btn--primary" type="submit">Send message</button>
+        <p class="form-fallback">
+          Form not wired up yet? Email
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a> instead.
+        </p>
+      </form>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .contact-meta {
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .contact-meta dt {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .contact-meta dd {
+    margin: 0.2rem 0 0;
+    color: var(--ink);
+  }
+
+  .contact-form {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .form-note {
+    color: var(--ink-faint);
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .prompt {
+    color: var(--orange);
+    font-weight: 700;
+  }
+
+  .contact-form label {
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+
+  .optional {
+    color: var(--ink-faint);
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 0.6rem 0.75rem;
+    width: 100%;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: 2px solid var(--mint);
+    outline-offset: 1px;
+    border-color: var(--mint);
+  }
+
+  .contact-form textarea {
+    resize: vertical;
+  }
+
+  .contact-form .btn {
+    justify-self: start;
+  }
+
+  .form-fallback {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    margin: 0;
+  }
+</style>

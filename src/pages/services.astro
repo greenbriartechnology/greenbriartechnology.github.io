@@ -1,0 +1,118 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CallToAction from '../components/CallToAction.astro';
+
+const services = [
+  {
+    title: 'Software Architecture & Strategy',
+    body: 'Architecture reviews, technical due diligence, and roadmaps that connect engineering decisions to business outcomes. We help you choose boring technology on purpose.',
+    items: ['System & data architecture', 'Technical due diligence', 'Build-vs-buy analysis', 'Scalability & reliability reviews'],
+  },
+  {
+    title: 'Cloud & Platform Engineering',
+    body: 'Foundations on AWS, GCP, or Azure that your team can run without a platform team of fifty. Infrastructure as code, observability, and sane defaults.',
+    items: ['Cloud foundations & landing zones', 'CI/CD pipelines', 'Infrastructure as code', 'Observability & cost control'],
+  },
+  {
+    title: 'Delivery & Modernization',
+    body: 'Hands-on engineering when you need throughput, and careful modernization when the old system still pays the bills. We ship in small, reversible steps.',
+    items: ['Feature delivery & augmentation', 'Legacy modernization', 'Incremental rewrites', 'Performance remediation'],
+  },
+  {
+    title: 'Data & AI Enablement',
+    body: 'Practical data pipelines and AI features that solve real problems. We start with the use case, not the hype, and keep humans in the loop.',
+    items: ['Data pipeline design', 'Analytics foundations', 'LLM & ML feature integration', 'Evaluation & guardrails'],
+  },
+  {
+    title: 'Security & Reliability',
+    body: 'Threat modeling, hardening, and incident readiness that meets you where you are. Security that engineers will actually adopt.',
+    items: ['Threat modeling', 'Secure SDLC practices', 'Incident response readiness', 'Reliability & SLOs'],
+  },
+  {
+    title: 'Fractional Leadership',
+    body: 'Interim CTO, principal engineer, or tech-lead capacity to steady the ship, hire well, and set technical direction during pivotal moments.',
+    items: ['Interim CTO / VP Eng', 'Team & hiring design', 'Process & rituals', 'Mentorship & coaching'],
+  },
+];
+
+const engagements = [
+  { name: 'Advisory', detail: 'Lightweight, ongoing access to senior guidance — reviews, second opinions, and direction-setting.' },
+  { name: 'Sprint', detail: 'A fixed, time-boxed push to design, prototype, or unblock a specific problem.' },
+  { name: 'Embedded', detail: 'We join your team for a defined period to deliver alongside your engineers.' },
+];
+---
+
+<Layout
+  title="Services"
+  description="Software architecture, cloud and platform engineering, delivery and modernization, data and AI, security, and fractional leadership."
+>
+  <PageHeader
+    eyebrow="Services"
+    title="Help, scaled to the problem in front of you."
+    lead="From a single architecture review to an embedded delivery team, we size the engagement to the work — never the other way around."
+  />
+
+  <section class="section">
+    <div class="container grid grid--2">
+      {
+        services.map((s) => (
+          <article class="card">
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+            <ul class="svc-list">
+              {s.items.map((i) => <li>{i}</li>)}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="eyebrow">Engagement models</p>
+      <h2>Three ways to work together</h2>
+      <div class="grid grid--3" style="margin-top:2rem;">
+        {
+          engagements.map((e) => (
+            <article class="card card--accent">
+              <h3>{e.name}</h3>
+              <p>{e.detail}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CallToAction
+    heading="Not sure which fits?"
+    text="Tell us about the problem and we'll recommend the lightest engagement that actually solves it."
+  />
+</Layout>
+
+<style>
+  .svc-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .svc-list li {
+    position: relative;
+    padding-left: 1.4rem;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  .svc-list li::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-weight: 700;
+  }
+</style>

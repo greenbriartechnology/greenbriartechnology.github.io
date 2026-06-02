@@ -1,0 +1,108 @@
+---
+import { NAV, SITE } from '../consts';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <p class="site-footer__name">
+        <span class="prompt">&gt;</span> {SITE.name}
+      </p>
+      <p class="site-footer__tag">{SITE.tagline}</p>
+      <p class="site-footer__meta">{SITE.location}</p>
+    </div>
+
+    <nav class="site-footer__nav" aria-label="Footer">
+      <ul>
+        {NAV.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container site-footer__bar">
+    <span>© {year} {SITE.name}</span>
+    <span class="site-footer__sep">·</span>
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--ink-dark-surface);
+    color: #cfccc1;
+    padding-block: clamp(2.5rem, 5vw, 3.5rem) 1.5rem;
+  }
+
+  .site-footer__inner {
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media (min-width: 40rem) {
+    .site-footer__inner {
+      grid-template-columns: 1.5fr 1fr;
+      align-items: start;
+    }
+  }
+
+  .site-footer__name {
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+
+  .prompt {
+    color: var(--mint-bright);
+  }
+
+  .site-footer__tag {
+    color: #cfccc1;
+    margin-bottom: 0.4rem;
+  }
+
+  .site-footer__meta {
+    color: #8c8a80;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .site-footer__nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 0.5rem 2rem;
+  }
+
+  .site-footer__nav a {
+    color: #cfccc1;
+    font-size: 0.95rem;
+  }
+
+  .site-footer__nav a:hover {
+    color: var(--orange-bright);
+    border-bottom-color: var(--orange-bright);
+  }
+
+  .site-footer__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #2a2b22;
+    font-size: 0.88rem;
+    color: #8c8a80;
+  }
+
+  .site-footer__bar a {
+    color: var(--mint-bright);
+  }
+
+  .site-footer__sep {
+    color: #4a4b40;
+  }
+</style>

@@ -1,0 +1,334 @@
+/* =========================================================================
+   Greenbriar Technology Group — global stylesheet
+   Aesthetic: 1960s teletype / terminal printout.
+   Primary color: mint green. Secondary color: burnt orange.
+   ========================================================================= */
+
+:root {
+  /* Brand palette */
+  --mint: #1f9e6f;          /* primary — mint green (darkened for AA contrast on paper) */
+  --mint-bright: #2bd49a;   /* brighter mint for accents on dark surfaces */
+  --mint-wash: #e6f7ef;     /* faint mint background wash */
+  --orange: #c0500f;        /* secondary — burnt orange */
+  --orange-bright: #e2691f; /* brighter burnt orange for hovers */
+  --orange-wash: #fbeee2;   /* faint orange background wash */
+
+  /* Surfaces & ink — a teletype printout on warm paper */
+  --paper: #f7f5ee;         /* page background */
+  --paper-raised: #fffdf7;  /* cards / raised surfaces */
+  --ink: #1c1b18;           /* primary text */
+  --ink-soft: #4a473f;      /* secondary text */
+  --ink-faint: #807c70;     /* muted text */
+  --rule: #d8d3c4;          /* hairlines / borders */
+  --ink-dark-surface: #14150f; /* dark band background */
+
+  /* Typography — fixed-width throughout */
+  --mono: 'IBM Plex Mono', 'JetBrains Mono', 'SFMono-Regular', 'Menlo',
+    'Consolas', 'Liberation Mono', monospace;
+
+  /* Rhythm */
+  --maxw: 64rem;
+  --gap: clamp(1rem, 2.5vw, 2rem);
+  --radius: 4px;
+}
+
+/* ----- Reset-ish ----- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+  background-color: var(--paper);
+  /* Subtle horizontal "feed lines" like fan-fold teletype paper */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2.25rem,
+    rgba(0, 0, 0, 0.018) 2.25rem,
+    rgba(0, 0, 0, 0.018) calc(2.25rem + 1px)
+  );
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--mint);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+a:hover {
+  color: var(--orange);
+  border-bottom-color: var(--orange);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.6em;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
+}
+
+h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+h3 {
+  font-size: 1.15rem;
+}
+
+p {
+  margin: 0 0 1rem;
+  max-width: 60ch;
+}
+
+ul,
+ol {
+  max-width: 60ch;
+}
+
+code,
+kbd {
+  background: var(--mint-wash);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.05em 0.35em;
+  font-size: 0.9em;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 2rem 0;
+}
+
+/* ----- Layout primitives ----- */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gap);
+}
+
+.section {
+  padding-block: clamp(3rem, 7vw, 5.5rem);
+}
+
+.section--tight {
+  padding-block: clamp(2rem, 4vw, 3rem);
+}
+
+.section--dark {
+  background: var(--ink-dark-surface);
+  color: #ece9df;
+}
+
+.section--dark h1,
+.section--dark h2,
+.section--dark h3 {
+  color: #fff;
+}
+
+.section--dark a {
+  color: var(--mint-bright);
+}
+
+.section--dark a:hover {
+  color: var(--orange-bright);
+  border-bottom-color: var(--orange-bright);
+}
+
+/* Eyebrow label — the "command prompt" motif */
+.eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 0.75rem;
+}
+
+.eyebrow::before {
+  content: '> ';
+  color: var(--mint);
+}
+
+.lead {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: var(--ink-soft);
+  max-width: 62ch;
+}
+
+/* ----- Buttons ----- */
+.btn {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius);
+  border: 2px solid var(--mint);
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s ease, color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.btn--primary {
+  background: var(--mint);
+  color: #06281d;
+}
+
+.btn--primary:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--rule);
+}
+
+.btn--ghost:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+  transform: translateY(-1px);
+}
+
+/* ----- Cards / grids ----- */
+.grid {
+  display: grid;
+  gap: var(--gap);
+}
+
+@media (min-width: 40rem) {
+  .grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  position: relative;
+}
+
+.card__tag {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mint);
+}
+
+.card h3 {
+  margin-top: 0.4rem;
+}
+
+.card p {
+  color: var(--ink-soft);
+  margin-bottom: 0;
+}
+
+/* Accent rule that sits on top of a card */
+.card--accent {
+  border-top: 3px solid var(--orange);
+}
+
+/* ----- Blinking terminal cursor ----- */
+.cursor {
+  display: inline-block;
+  width: 0.6ch;
+  height: 1.05em;
+  margin-left: 0.1ch;
+  background: var(--mint);
+  transform: translateY(0.12em);
+  animation: blink 1.05s steps(1) infinite;
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    animation: none;
+  }
+}
+
+/* ----- Utility ----- */
+.text-center {
+  text-align: center;
+}
+
+.mt-0 {
+  margin-top: 0;
+}
+
+.stack > * + * {
+  margin-top: 1rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--ink);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
+:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}

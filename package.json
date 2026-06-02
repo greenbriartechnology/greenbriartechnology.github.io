@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "greenbriar-technology-group",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "astro": "^6.4.3"
   }
 }

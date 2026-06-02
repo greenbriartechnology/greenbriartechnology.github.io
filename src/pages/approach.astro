@@ -1,0 +1,129 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CallToAction from '../components/CallToAction.astro';
+
+const steps = [
+  {
+    n: '01',
+    title: 'Listen & frame',
+    body: 'We start by understanding the business, the constraints, and the actual problem — which is often not the one in the brief. No solutions until the problem is clear.',
+  },
+  {
+    n: '02',
+    title: 'Map the terrain',
+    body: 'A focused assessment of the system, team, and risks. You get a written, plain-language picture of where things stand and where the leverage is.',
+  },
+  {
+    n: '03',
+    title: 'Plan in thin slices',
+    body: 'We sequence work into small, reversible steps that each deliver value. Big bets are broken down until they stop being scary.',
+  },
+  {
+    n: '04',
+    title: 'Build in the open',
+    body: 'We ship continuously, demo often, and keep a short feedback loop. Decisions are written down so the reasoning outlives the meeting.',
+  },
+  {
+    n: '05',
+    title: 'Harden & hand off',
+    body: 'Tests, docs, runbooks, and pairing so your team owns the result. We measure success by how little you need us afterward.',
+  },
+];
+
+const principles = [
+  { title: 'Boring on purpose', body: 'Proven tools beat novel ones for systems that have to last. We save the cleverness for where it pays off.' },
+  { title: 'Reversible steps', body: 'Small changes that can be undone are how we move fast without breaking the things that matter.' },
+  { title: 'Plain language', body: 'If we cannot explain a decision simply, we do not understand it well enough yet.' },
+  { title: 'Leave it better', body: 'Every engagement should make the codebase, the team, and the documentation a little healthier.' },
+];
+---
+
+<Layout
+  title="Approach"
+  description="How Greenbriar works: listen and frame, map the terrain, plan in thin slices, build in the open, then harden and hand off."
+>
+  <PageHeader
+    eyebrow="Approach"
+    title="A calm, deliberate way of working."
+    lead="Good consulting is mostly judgment and follow-through. Here is the process we bring to every engagement — and the principles underneath it."
+  />
+
+  <section class="section">
+    <div class="container">
+      <ol class="steps">
+        {
+          steps.map((s) => (
+            <li class="step">
+              <span class="step__n">{s.n}</span>
+              <div>
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="eyebrow">Operating principles</p>
+      <h2>What we hold to</h2>
+      <div class="grid grid--2" style="margin-top:2rem;">
+        {
+          principles.map((p) => (
+            <article class="card">
+              <h3>{p.title}</h3>
+              <p>{p.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CallToAction />
+</Layout>
+
+<style>
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 52rem;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .step:last-child {
+    border-bottom: none;
+  }
+
+  .step__n {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--orange);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 0.35rem 0.7rem;
+    height: max-content;
+    background: var(--orange-wash);
+  }
+
+  .step h3 {
+    margin-top: 0.1rem;
+  }
+
+  .step p {
+    margin-bottom: 0;
+    color: var(--ink-soft);
+  }
+</style>
