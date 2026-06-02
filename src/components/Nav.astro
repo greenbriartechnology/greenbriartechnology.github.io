@@ -1,0 +1,201 @@
+---
+import { NAV, SITE } from '../consts';
+
+// Normalize the current path (strip trailing slash) so links highlight correctly.
+const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="/" aria-label={`${SITE.name} — home`}>
+      <span class="brand__prompt">&gt;</span>
+      <span class="brand__name">greenbriar</span>
+      <span class="brand__tld">.tech</span>
+    </a>
+
+    <button
+      class="nav-toggle"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+      aria-label="Toggle navigation menu"
+    >
+      <span class="nav-toggle__bar"></span>
+      <span class="nav-toggle__bar"></span>
+      <span class="nav-toggle__bar"></span>
+    </button>
+
+    <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+      <ul>
+        {
+          NAV.map((item) => {
+            const href = item.href.replace(/\/+$/, '') || '/';
+            const isActive =
+              href === '/' ? current === '/' : current.startsWith(href);
+            return (
+              <li>
+                <a href={item.href} aria-current={isActive ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: saturate(1.4) blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 4rem;
+    gap: 1rem;
+  }
+
+  .brand {
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    border-bottom: none;
+    white-space: nowrap;
+  }
+
+  .brand:hover {
+    color: var(--ink);
+  }
+
+  .brand__prompt {
+    color: var(--mint);
+    margin-right: 0.35ch;
+  }
+
+  .brand__tld {
+    color: var(--orange);
+  }
+
+  .primary-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.4rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .primary-nav a {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
+  }
+
+  .primary-nav a:hover {
+    color: var(--orange);
+    border-bottom-color: var(--orange);
+  }
+
+  .primary-nav a[aria-current='page'] {
+    color: var(--ink);
+    border-bottom-color: var(--mint);
+  }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 0.55rem 0.6rem;
+    cursor: pointer;
+  }
+
+  .nav-toggle__bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--ink);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  @media (max-width: 48rem) {
+    .nav-toggle {
+      display: flex;
+    }
+
+    .primary-nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--paper-raised);
+      border-bottom: 1px solid var(--rule);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease;
+    }
+
+    .primary-nav[data-open='true'] {
+      max-height: 22rem;
+    }
+
+    .primary-nav ul {
+      flex-direction: column;
+      gap: 0;
+      padding: 0.5rem var(--gap) 1rem;
+    }
+
+    .primary-nav li {
+      border-bottom: 1px dashed var(--rule);
+    }
+
+    .primary-nav a {
+      display: block;
+      padding: 0.85rem 0;
+    }
+
+    /* Animate the hamburger into an X when open */
+    .nav-toggle[aria-expanded='true'] .nav-toggle__bar:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .nav-toggle[aria-expanded='true'] .nav-toggle__bar:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle[aria-expanded='true'] .nav-toggle__bar:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+</style>
+
+<script>
+  // Minimal progressive enhancement: toggle the mobile menu.
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const nav = document.querySelector<HTMLElement>('#primary-nav');
+
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      nav.dataset.open = String(!open);
+    });
+
+    // Close the menu after navigating on mobile.
+    nav.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).tagName === 'A') {
+        toggle.setAttribute('aria-expanded', 'false');
+        nav.dataset.open = 'false';
+      }
+    });
+  }
+</script>

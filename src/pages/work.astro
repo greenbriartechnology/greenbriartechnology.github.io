@@ -1,0 +1,105 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CallToAction from '../components/CallToAction.astro';
+
+// Placeholder case studies — replace with real engagements over time.
+const cases = [
+  {
+    sector: 'Fintech',
+    title: 'Re-platformed a payments core without downtime',
+    summary: 'Incrementally migrated a monolithic ledger to a modular service architecture, cutting settlement latency while keeping the books balanced throughout.',
+    metrics: ['0 min downtime', '4× faster settlement', '6-month migration'],
+  },
+  {
+    sector: 'Healthcare',
+    title: 'Stood up a compliant data platform',
+    summary: 'Designed a HIPAA-aware data foundation with audit trails and least-privilege access, unlocking analytics that were previously off-limits.',
+    metrics: ['HIPAA-ready', '12 data sources', '90% less manual reporting'],
+  },
+  {
+    sector: 'SaaS',
+    title: 'Took a prototype to production-grade',
+    summary: 'Hardened a fast-moving MVP with tests, CI/CD, and observability, letting the team ship daily with confidence instead of dread.',
+    metrics: ['Daily deploys', '70% test coverage', '3-week ramp'],
+  },
+  {
+    sector: 'Logistics',
+    title: 'Tamed a runaway cloud bill',
+    summary: 'Right-sized infrastructure and introduced cost guardrails, reclaiming budget without touching reliability or developer velocity.',
+    metrics: ['38% cost cut', 'No SLA impact', 'Guardrails in place'],
+  },
+];
+---
+
+<Layout
+  title="Work"
+  description="Selected engagements across fintech, healthcare, SaaS, and logistics. Placeholder case studies to be replaced with real client work."
+>
+  <PageHeader
+    eyebrow="Work"
+    title="A sample of the problems we like."
+    lead="The names are under NDA, but the patterns are familiar. These illustrative engagements show the kind of work we take on."
+  />
+
+  <section class="section">
+    <div class="container grid grid--2">
+      {
+        cases.map((c) => (
+          <article class="card card--accent case">
+            <span class="card__tag">{c.sector}</span>
+            <h3>{c.title}</h3>
+            <p>{c.summary}</p>
+            <ul class="metrics">
+              {c.metrics.map((m) => <li>{m}</li>)}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="container" style="margin-top:2.5rem;">
+      <p class="note">
+        <span class="prompt">#</span> Placeholder case studies. Real, named work will
+        appear here as engagements wrap and clients approve their stories.
+      </p>
+    </div>
+  </section>
+
+  <CallToAction
+    heading="Want to be the next case study?"
+    text="Bring us a thorny problem. We'll bring senior hands and a plan to solve it."
+  />
+</Layout>
+
+<style>
+  .metrics {
+    list-style: none;
+    padding: 0;
+    margin: 1.1rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .metrics li {
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    color: var(--mint);
+    border: 1px solid var(--rule);
+    background: var(--mint-wash);
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+  }
+
+  .note {
+    color: var(--ink-faint);
+    font-size: 0.9rem;
+    max-width: none;
+  }
+
+  .prompt {
+    color: var(--orange);
+    font-weight: 700;
+  }
+</style>
