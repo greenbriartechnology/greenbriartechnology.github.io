@@ -4,7 +4,7 @@ const NAV_PAGES = ['/', '/services', '/approach', '/work', '/about', '/contact']
 
 const MEMBERS = [
   { name: 'Josef Schroeter', linkedin: 'https://www.linkedin.com/in/josefschroeter/' },
-  { name: 'Mike Deskevich', linkedin: 'https://www.linkedin.com/in/michael-deskevich-2498b1279/' },
+  { name: 'Michael Deskevich', linkedin: 'https://www.linkedin.com/in/michael-deskevich-2498b1279/' },
   { name: 'Matthew Ball', linkedin: 'https://www.linkedin.com/in/matthewvball/' },
 ];
 
