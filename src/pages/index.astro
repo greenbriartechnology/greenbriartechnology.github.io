@@ -21,11 +21,6 @@ const services = [
   },
 ];
 
-const stats = [
-  { value: '40+', label: 'Engagements delivered' },
-  { value: `${new Date().getFullYear() - SITE.founded} yrs`, label: 'In practice' },
-  { value: '100%', label: 'Senior practitioners' },
-];
 ---
 
 <Layout>
@@ -76,20 +71,6 @@ const stats = [
       <p style="margin-top:2rem;">
         <a href="/services">See the full menu of services &rarr;</a>
       </p>
-    </div>
-  </section>
-
-  <!-- ===== Stats band ===== -->
-  <section class="section--dark stats">
-    <div class="container stats__inner">
-      {
-        stats.map((s) => (
-          <div class="stat">
-            <span class="stat__value">{s.value}</span>
-            <span class="stat__label">{s.label}</span>
-          </div>
-        ))
-      }
     </div>
   </section>
 

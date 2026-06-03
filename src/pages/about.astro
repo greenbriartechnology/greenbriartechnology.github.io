@@ -10,10 +10,27 @@ const values = [
   { title: 'Stewardship', body: 'Your systems and budget are not ours to waste. We optimize for your long-term health.' },
 ];
 
-const team = [
-  { name: 'A. Founder', role: 'Principal Consultant', bio: 'Two decades building and scaling systems across fintech and infrastructure. Still happiest in a terminal.' },
-  { name: 'B. Partner', role: 'Cloud & Platform Lead', bio: 'Specializes in calm, operable platforms and teaching teams to run them.' },
-  { name: 'C. Partner', role: 'Delivery Lead', bio: 'Turns ambiguous problems into shipped software, one thin slice at a time.' },
+// Founding members of Greenbriar Technology Group.
+// Bios are intentionally brief for now; titles omitted.
+const members = [
+  {
+    name: 'Josef Schroeter',
+    photo: '/team/josef-schroeter.jpeg',
+    linkedin: 'https://www.linkedin.com/in/josefschroeter/',
+    bio: '',
+  },
+  {
+    name: 'Michael Deskevich',
+    photo: '/team/michael-deskevich.jpeg',
+    linkedin: 'https://www.linkedin.com/in/michael-deskevich-2498b1279/',
+    bio: '',
+  },
+  {
+    name: 'Matthew Ball',
+    photo: '/team/matthew-ball.jpeg',
+    linkedin: 'https://www.linkedin.com/in/matthewvball/',
+    bio: '',
+  },
 ];
 ---
 
@@ -59,25 +76,44 @@ const team = [
     </div>
   </section>
 
-  <section class="section section--tight">
+  <section class="section section--tight" id="team">
     <div class="container">
       <p class="eyebrow">The team</p>
       <h2>Who you'll actually work with</h2>
-      <div class="grid grid--3" style="margin-top:2rem;">
+      <p>
+        Greenbriar is a small, senior team — the people who scope your work are
+        the people who do it. No hand-offs to junior staff you never met. Meet
+        the founding members.
+      </p>
+
+      <ul class="team-grid">
         {
-          team.map((t) => (
-            <article class="card">
-              <div class="avatar" aria-hidden="true">{t.name.charAt(0)}</div>
-              <h3>{t.name}</h3>
-              <p class="role">{t.role}</p>
-              <p>{t.bio}</p>
-            </article>
+          members.map((m) => (
+            <li class="member card">
+              <img
+                class="member__photo"
+                src={m.photo}
+                width="600"
+                height="600"
+                alt={`Portrait of ${m.name}`}
+                loading="lazy"
+                decoding="async"
+              />
+              <h3 class="member__name">{m.name}</h3>
+              <p class="member__bio">{m.bio}</p>
+              <a
+                class="member__link"
+                href={m.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span class="prompt">&gt;</span> LinkedIn
+                <span class="member__link-host">/in</span>
+              </a>
+            </li>
           ))
         }
-      </div>
-      <p class="note">
-        <span class="prompt">#</span> Placeholder bios — real team profiles coming soon.
-      </p>
+      </ul>
     </div>
   </section>
 
@@ -107,35 +143,69 @@ const team = [
     color: var(--ink-soft);
   }
 
-  .avatar {
-    width: 3rem;
-    height: 3rem;
+  .team-grid {
+    list-style: none;
+    /* Override the global `ul { max-width: 60ch }` so the cards span the full
+       container width, matching the section above. */
+    max-width: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
     display: grid;
-    place-items: center;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #06281d;
-    background: var(--mint);
+    gap: var(--gap);
+  }
+
+  @media (min-width: 48rem) {
+    .team-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .member {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .member__photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
     border-radius: var(--radius);
-    margin-bottom: 0.9rem;
+    border: 1px solid var(--rule);
+    margin-bottom: 1.1rem;
+    background: var(--ink-dark-surface);
   }
 
-  .role {
-    color: var(--orange);
-    font-size: 0.85rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    margin-bottom: 0.6rem;
+  .member__name {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
   }
 
-  .note {
-    color: var(--ink-faint);
-    font-size: 0.9rem;
-    margin-top: 1.5rem;
+  .member__bio {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    flex: 1;
   }
 
-  .prompt {
+  .member__link {
+    align-self: start;
+    margin-top: 0.5rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-bottom: 1px solid transparent;
+  }
+
+  .member__link .prompt {
     color: var(--orange);
     font-weight: 700;
+  }
+
+  .member__link-host {
+    color: var(--ink-faint);
+    font-weight: 400;
+  }
+
+  .member__link:hover .member__link-host {
+    color: inherit;
   }
 </style>

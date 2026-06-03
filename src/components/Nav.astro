@@ -9,8 +9,7 @@ const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
   <div class="container site-header__inner">
     <a class="brand" href="/" aria-label={`${SITE.name} — home`}>
       <span class="brand__prompt">&gt;</span>
-      <span class="brand__name">greenbriar</span>
-      <span class="brand__tld">.tech</span>
+      <span class="brand__name">greenbriar technology group</span>
     </a>
 
     <button
@@ -81,8 +80,8 @@ const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
     margin-right: 0.35ch;
   }
 
-  .brand__tld {
-    color: var(--orange);
+  .brand__name {
+    color: var(--ink);
   }
 
   .primary-nav ul {

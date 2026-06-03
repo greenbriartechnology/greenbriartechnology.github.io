@@ -8,8 +8,8 @@ export const SITE = {
   description:
     'Greenbriar Technology Group is a boutique technology consulting practice helping organizations design, build, and modernize software with clarity and craft.',
   email: 'hello@greenbriartechnology.com',
-  location: 'Remote-first · United States',
-  founded: 2018,
+  location: 'Boulder, CO · United States',
+  founded: 2026,
 };
 
 export const NAV = [

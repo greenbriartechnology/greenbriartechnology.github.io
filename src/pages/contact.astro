@@ -17,12 +17,6 @@ import { SITE } from '../consts';
   <section class="section">
     <div class="container grid grid--2" style="align-items:start;">
       <div class="stack">
-        <h2 class="mt-0">Reach us directly</h2>
-        <p>
-          Prefer email? Write to us at
-          <a href={`mailto:${SITE.email}`}>{SITE.email}</a> with a few sentences
-          about your project, timeline, and what success looks like.
-        </p>
         <dl class="contact-meta">
           <div>
             <dt>Email</dt>
@@ -32,49 +26,8 @@ import { SITE } from '../consts';
             <dt>Location</dt>
             <dd>{SITE.location}</dd>
           </div>
-          <div>
-            <dt>Response time</dt>
-            <dd>Within 2 business days</dd>
-          </div>
         </dl>
       </div>
-
-      <!--
-        Static-friendly form. This posts to a form-handling service so the site
-        can stay fully static on GitHub Pages. Replace the action URL below with
-        your own endpoint (e.g. Formspree: https://formspree.io/f/your-id),
-        or delete the form entirely and rely on the mailto link above.
-      -->
-      <form
-        class="contact-form card"
-        action="https://formspree.io/f/your-form-id"
-        method="POST"
-      >
-        <p class="form-note">
-          <span class="prompt">$</span> send --to greenbriar
-        </p>
-        <label>
-          Name
-          <input type="text" name="name" autocomplete="name" required />
-        </label>
-        <label>
-          Email
-          <input type="email" name="email" autocomplete="email" required />
-        </label>
-        <label>
-          Company <span class="optional">(optional)</span>
-          <input type="text" name="company" autocomplete="organization" />
-        </label>
-        <label>
-          How can we help?
-          <textarea name="message" rows="5" required></textarea>
-        </label>
-        <button class="btn btn--primary" type="submit">Send message</button>
-        <p class="form-fallback">
-          Form not wired up yet? Email
-          <a href={`mailto:${SITE.email}`}>{SITE.email}</a> instead.
-        </p>
-      </form>
     </div>
   </section>
 </Layout>
