@@ -6,10 +6,12 @@
 
 :root {
   /* Brand palette */
-  --mint: #1f9e6f;          /* primary — mint green (darkened for AA contrast on paper) */
+  --mint: #1f9e6f;          /* primary — mint green (fills, borders, accents) */
+  --mint-ink: #0e7a54;      /* darker mint for text/links on paper (meets WCAG AA) */
   --mint-bright: #2bd49a;   /* brighter mint for accents on dark surfaces */
   --mint-wash: #e6f7ef;     /* faint mint background wash */
   --orange: #c0500f;        /* secondary — burnt orange */
+  --orange-ink: #ad470c;    /* darker burnt orange for text on the orange wash (AA) */
   --orange-bright: #e2691f; /* brighter burnt orange for hovers */
   --orange-wash: #fbeee2;   /* faint orange background wash */
 
@@ -18,7 +20,7 @@
   --paper-raised: #fffdf7;  /* cards / raised surfaces */
   --ink: #1c1b18;           /* primary text */
   --ink-soft: #4a473f;      /* secondary text */
-  --ink-faint: #807c70;     /* muted text */
+  --ink-faint: #6f6c60;     /* muted text (darkened to meet WCAG AA on paper) */
   --rule: #d8d3c4;          /* hairlines / borders */
   --ink-dark-surface: #14150f; /* dark band background */
 
@@ -74,7 +76,7 @@ img {
 }
 
 a {
-  color: var(--mint);
+  color: var(--mint-ink);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: color 0.15s ease, border-color 0.15s ease;
@@ -168,6 +170,20 @@ hr {
   border-bottom-color: var(--orange-bright);
 }
 
+/* On the dark band, use the lighter accent tones and keep the solid mint button
+   readable (the rules above would otherwise tint these for low contrast). */
+.section--dark .eyebrow {
+  color: var(--orange-bright);
+}
+
+.section--dark .lead {
+  color: #d7d4c8;
+}
+
+.section--dark .btn--primary {
+  color: #06281d;
+}
+
 /* Eyebrow label — the "command prompt" motif */
 .eyebrow {
   display: inline-block;
@@ -255,7 +271,7 @@ hr {
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--mint);
+  color: var(--mint-ink);
 }
 
 .card h3 {

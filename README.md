@@ -45,6 +45,7 @@ npm run build    # build production site to ./dist
 npm run preview  # preview the production build locally
 npm run lint     # astro check (well-formed pages + types) + eslint
 npm test         # build + run the Playwright tests
+npm run check:links  # build + fetch every external link (ad hoc, see below)
 ```
 
 ### Linting
@@ -71,6 +72,9 @@ the suite):
   format-checked but not fetched, since sites like LinkedIn block bots.)
 - **`site.spec.ts`** covers behavior: unknown routes return the 404 page with a
   link home, and the mobile nav toggle opens and closes the menu.
+- **`a11y.spec.ts`** runs an [axe-core](https://github.com/dequelabs/axe-core)
+  accessibility scan on every page (and the 404 page) and fails on any WCAG 2.1
+  A/AA violation (contrast, labels, roles, landmarks).
 
 First run only, install the browser:
 
@@ -81,6 +85,25 @@ npx playwright install --with-deps chromium
 Both `lint` and `test` run in CI on every pull request
 (`.github/workflows/ci.yml`) and are the required status checks that gate merges
 into `main`.
+
+### Checking external links
+
+External links (e.g. LinkedIn profiles) are **not** verified in CI — some sites
+block automated requests, which would make CI flaky. Instead, check them on
+demand:
+
+```sh
+npm run check:links
+```
+
+This builds the site, finds every external `<a>` link in the generated HTML, and
+fetches each one, printing `OK` / `WARN` / `FAIL`:
+
+- **OK** — the link resolved (2xx).
+- **WARN** — the site refused our automated request (e.g. LinkedIn returns
+  `999`). The link is probably fine; open it in a browser to confirm.
+- **FAIL** — the link is broken (404/410/5xx or the host didn't resolve). The
+  command exits non-zero and lists which page each broken link is on.
 
 ### Git hooks
 
@@ -113,7 +136,9 @@ is wired up automatically by `npm install` (via the `prepare` script, which sets
 │   ├── styles/
 │   │   └── global.css      # theme + all shared styles
 │   └── consts.ts           # site name, domain, email, nav links
-├── tests/                  # Playwright smoke tests
+├── tests/                  # Playwright tests (structure, behavior, a11y)
+├── scripts/
+│   └── check-external-links.mjs  # ad-hoc external link checker
 ├── .githooks/
 │   └── pre-commit          # blocks direct commits to main
 ├── .github/workflows/
