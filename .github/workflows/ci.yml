@@ -1,8 +1,8 @@
 name: CI
 
-# Build the site and run the Playwright smoke tests on every PR and on pushes
-# to main. Mark the "test" job as a required status check in branch protection
-# to block merges when it fails.
+# Lint and test the site on every PR and on pushes to main. Mark both the
+# "lint" and "test" jobs as required status checks in branch protection to
+# block merges when either fails.
 on:
   pull_request:
     branches: [main]
@@ -11,14 +11,33 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  lint:
+    # Pin to 24.04 to match GitHub's current default runner image.
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint (astro check + eslint)
+        run: npm run lint
+
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm

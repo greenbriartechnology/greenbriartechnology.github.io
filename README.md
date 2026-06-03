@@ -43,22 +43,40 @@ npm install      # install dependencies (also enables the git hooks, see below)
 npm run dev      # start dev server at http://localhost:4321
 npm run build    # build production site to ./dist
 npm run preview  # preview the production build locally
-npm test         # build + run the Playwright smoke tests
+npm run lint     # astro check (well-formed pages + types) + eslint
+npm test         # build + run the Playwright tests
 ```
+
+### Linting
+
+`npm run lint` runs two checks:
+
+- **`astro check`** — type-checks the project and validates that every `.astro`
+  page is well-formed (unclosed tags, invalid expressions, etc. fail here).
+- **`eslint .`** — lints JS/TS and Astro files (config in `eslint.config.mjs`).
 
 ### Tests
 
-`npm test` runs the [Playwright](https://playwright.dev) smoke tests in `tests/`.
-Playwright builds the site, serves it with `astro preview`, and checks that the
-key pages load and that the team content renders on the About page. The same
-suite runs in CI on every pull request (`.github/workflows/ci.yml`) and is the
-required status check that gates merges into `main`.
+`npm test` runs the [Playwright](https://playwright.dev) tests in `tests/`.
+Playwright builds the site, serves it with `astro preview`, and then:
+
+- loads every primary page and checks each returns 200 and is well-formed
+  (one `<h1>`, a non-empty `<title>`);
+- crawls all internal links and fails on any that 404, and verifies in-page
+  anchor targets (e.g. `#team`) actually exist;
+- format-checks external and `mailto:` links (external URLs are validated but
+  not fetched, since sites like LinkedIn block automated requests);
+- confirms the founding-team content renders on the About page.
 
 First run only, install the browser:
 
 ```sh
 npx playwright install --with-deps chromium
 ```
+
+Both `lint` and `test` run in CI on every pull request
+(`.github/workflows/ci.yml`) and are the required status checks that gate merges
+into `main`.
 
 ### Git hooks
 
@@ -95,8 +113,9 @@ is wired up automatically by `npm install` (via the `prepare` script, which sets
 ├── .githooks/
 │   └── pre-commit          # blocks direct commits to main
 ├── .github/workflows/
-│   ├── ci.yml              # build + Playwright tests (required check)
+│   ├── ci.yml              # lint + Playwright tests (required checks)
 │   └── deploy.yml          # build + deploy to GitHub Pages
+├── eslint.config.mjs       # ESLint flat config (JS/TS + Astro)
 ├── playwright.config.ts    # test runner + preview web server config
 └── astro.config.mjs        # site URL + sitemap integration
 ```
