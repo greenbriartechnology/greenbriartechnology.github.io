@@ -39,11 +39,34 @@ navigation toggle. Everything else is static and works without JavaScript.
 Requires **Node.js 22.12+**.
 
 ```sh
-npm install      # install dependencies
+npm install      # install dependencies (also enables the git hooks, see below)
 npm run dev      # start dev server at http://localhost:4321
 npm run build    # build production site to ./dist
 npm run preview  # preview the production build locally
+npm test         # build + run the Playwright smoke tests
 ```
+
+### Tests
+
+`npm test` runs the [Playwright](https://playwright.dev) smoke tests in `tests/`.
+Playwright builds the site, serves it with `astro preview`, and checks that the
+key pages load and that the team content renders on the About page. The same
+suite runs in CI on every pull request (`.github/workflows/ci.yml`) and is the
+required status check that gates merges into `main`.
+
+First run only, install the browser:
+
+```sh
+npx playwright install --with-deps chromium
+```
+
+### Git hooks
+
+A `pre-commit` hook (in `.githooks/`) refuses direct commits to `main`, which is
+a protected branch — all work goes through a feature branch and a PR. The hook
+is wired up automatically by `npm install` (via the `prepare` script, which sets
+`git config core.hooksPath .githooks`). To bypass it for a single commit:
+`git commit --no-verify`.
 
 ## Project structure
 
@@ -68,8 +91,13 @@ npm run preview  # preview the production build locally
 │   ├── styles/
 │   │   └── global.css      # theme + all shared styles
 │   └── consts.ts           # site name, domain, email, nav links
+├── tests/                  # Playwright smoke tests
+├── .githooks/
+│   └── pre-commit          # blocks direct commits to main
 ├── .github/workflows/
-│   └── deploy.yml          # CI: build + deploy to GitHub Pages
+│   ├── ci.yml              # build + Playwright tests (required check)
+│   └── deploy.yml          # build + deploy to GitHub Pages
+├── playwright.config.ts    # test runner + preview web server config
 └── astro.config.mjs        # site URL + sitemap integration
 ```
 
