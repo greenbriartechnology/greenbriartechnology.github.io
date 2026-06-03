@@ -18,6 +18,5 @@ export const NAV = [
   { href: '/approach', label: 'Approach' },
   { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
-  { href: '/team', label: 'Team' },
   { href: '/contact', label: 'Contact' },
 ];

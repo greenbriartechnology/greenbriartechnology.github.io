@@ -9,6 +9,12 @@ const values = [
   { title: 'Candor', body: 'We tell you what we actually think, early, even when it complicates the engagement.' },
   { title: 'Stewardship', body: 'Your systems and budget are not ours to waste. We optimize for your long-term health.' },
 ];
+
+const team = [
+  { name: 'A. Founder', role: 'Principal Consultant', bio: 'Two decades building and scaling systems across fintech and infrastructure. Still happiest in a terminal.' },
+  { name: 'B. Partner', role: 'Cloud & Platform Lead', bio: 'Specializes in calm, operable platforms and teaching teams to run them.' },
+  { name: 'C. Partner', role: 'Delivery Lead', bio: 'Turns ambiguous problems into shipped software, one thin slice at a time.' },
+];
 ---
 
 <Layout
@@ -57,12 +63,20 @@ const values = [
     <div class="container">
       <p class="eyebrow">The team</p>
       <h2>Who you'll actually work with</h2>
-      <p>
-        Greenbriar is a small, senior team — the people who scope your work are
-        the people who do it. No hand-offs to junior staff you never met.
-      </p>
-      <p>
-        <a href="/team">Meet the founding members &rarr;</a>
+      <div class="grid grid--3" style="margin-top:2rem;">
+        {
+          team.map((t) => (
+            <article class="card">
+              <div class="avatar" aria-hidden="true">{t.name.charAt(0)}</div>
+              <h3>{t.name}</h3>
+              <p class="role">{t.role}</p>
+              <p>{t.bio}</p>
+            </article>
+          ))
+        }
+      </div>
+      <p class="note">
+        <span class="prompt">#</span> Placeholder bios — real team profiles coming soon.
       </p>
     </div>
   </section>
@@ -91,5 +105,37 @@ const values = [
   .values p {
     margin: 0;
     color: var(--ink-soft);
+  }
+
+  .avatar {
+    width: 3rem;
+    height: 3rem;
+    display: grid;
+    place-items: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #06281d;
+    background: var(--mint);
+    border-radius: var(--radius);
+    margin-bottom: 0.9rem;
+  }
+
+  .role {
+    color: var(--orange);
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .note {
+    color: var(--ink-faint);
+    font-size: 0.9rem;
+    margin-top: 1.5rem;
+  }
+
+  .prompt {
+    color: var(--orange);
+    font-weight: 700;
   }
 </style>
