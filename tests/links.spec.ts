@@ -93,6 +93,18 @@ test('site is structurally healthy across every reachable page', async ({ page, 
       if (url.protocol !== 'http:' && url.protocol !== 'https:') continue;
 
       if (url.origin === base.origin) {
+        // Internal page links must keep a trailing slash so they match what
+        // GitHub Pages serves (/about/index.html) — a slash-less link costs every
+        // visitor a 301 redirect per click. Asset links (favicon.svg, photos)
+        // have a file extension and are exempt.
+        const hasFileExtension = /\.[a-z0-9]+$/i.test(url.pathname);
+        if (!hasFileExtension) {
+          expect(
+            url.pathname.endsWith('/'),
+            `internal link "${href}" on ${path} should end with a trailing slash (avoids a 301 redirect)`
+          ).toBe(true);
+        }
+
         const dest = normPath(url.pathname);
         if (url.hash.length > 1) anchorTargets.push({ from: path, dest, hash: url.hash.slice(1) });
         if (!visited.has(dest) && !toVisit.includes(dest)) toVisit.push(dest);

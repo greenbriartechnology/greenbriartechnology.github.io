@@ -12,11 +12,14 @@ export const SITE = {
   founded: 2026,
 };
 
+// Internal hrefs keep a trailing slash so they match the files GitHub Pages
+// actually serves (e.g. /about/index.html). Linking to /about would cost every
+// visitor a 301 redirect to /about/ on each click.
 export const NAV = [
   { href: '/', label: 'Home' },
-  { href: '/services', label: 'Services' },
-  { href: '/approach', label: 'Approach' },
-  { href: '/work', label: 'Work' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/services/', label: 'Services' },
+  { href: '/approach/', label: 'Approach' },
+  { href: '/work/', label: 'Work' },
+  { href: '/about/', label: 'About' },
+  { href: '/contact/', label: 'Contact' },
 ];
