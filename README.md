@@ -63,7 +63,11 @@ to, drop them in `public/fonts/`, and mirror the `@font-face` block (keeping the
 
 - **`tests/links.spec.ts`** — crawls every page: 200 status, well-formed
   `<head>`, no broken links or images, no uncaught JS errors, valid in-page
-  anchors, and nav reachability.
+  anchors, nav reachability, every image reserves its space (width+height or
+  `aspect-ratio`), and no CSS/fonts loaded from third-party origins.
+- **`tests/cls.spec.ts`** — measures Cumulative Layout Shift on every page and
+  fails if it exceeds a tight budget (catches images/fonts that load without
+  reserved space).
 - **`tests/site.spec.ts`** — behavior: the 404 page and the mobile nav toggle.
 - **`tests/a11y.spec.ts`** — an [axe-core](https://github.com/dequelabs/axe-core)
   WCAG 2.1 A/AA scan on every page.
