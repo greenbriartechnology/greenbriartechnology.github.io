@@ -46,6 +46,16 @@ npm run check:links  # fetch every external link, report OK/WARN/FAIL (ad hoc)
 The test suite automatically checks the new page is reachable, well-formed,
 link-clean, and accessible.
 
+## Fonts
+
+IBM Plex Mono is **self-hosted** in `public/fonts/` (woff2, weights 400/500/700,
+latin + latin-ext) and declared via `@font-face` in `src/styles/global.css` — so
+the site makes no render-blocking request to Google's font servers. To refresh or
+add a weight, fetch the CSS from the Google Fonts css2 endpoint with a modern
+browser User-Agent, download the `latin` / `latin-ext` `.woff2` files it points
+to, drop them in `public/fonts/`, and mirror the `@font-face` block (keeping the
+`unicode-range`). The body weight (400 latin) is preloaded in `Layout.astro`.
+
 ## Quality checks
 
 `npm run lint` and `npm test` run in CI on every pull request
@@ -72,7 +82,7 @@ apex→www redirect are already set up — there's nothing to do.
 ## Project structure
 
 ```text
-public/                  # copied verbatim into the build (CNAME, favicon, team photos)
+public/                  # copied verbatim into the build (CNAME, favicon, team photos, fonts)
 src/
 ├── components/           # Nav, Footer, PageHeader, CallToAction
 ├── layouts/Layout.astro  # base HTML shell, <head>, fonts, nav + footer
