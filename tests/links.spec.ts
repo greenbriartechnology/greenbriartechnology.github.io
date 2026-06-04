@@ -20,6 +20,18 @@ test('site is structurally healthy across every reachable page', async ({ page, 
   let currentPath = '/';
   page.on('pageerror', (err) => jsErrors.push(`${currentPath}: ${err.message}`));
 
+  // Stylesheets and fonts pulled from another origin are render-blocking and
+  // re-introduce the third-party round-trip we removed by self-hosting the font.
+  // Fail if any page loads CSS or a font from off-site (assets must be local).
+  const thirdPartyAssets: string[] = [];
+  page.on('request', (req) => {
+    const type = req.resourceType();
+    if (type !== 'font' && type !== 'stylesheet') return;
+    if (new URL(req.url()).origin !== base.origin) {
+      thirdPartyAssets.push(`${currentPath}: ${type} ${req.url()}`);
+    }
+  });
+
   const toVisit: string[] = ['/'];
   const visited = new Set<string>();
   const idsByPath = new Map<string, Set<string>>();
@@ -48,14 +60,34 @@ test('site is structurally healthy across every reachable page', async ({ page, 
     const ids = await page.locator('[id]').evaluateAll((els) => els.map((e) => e.id));
     idsByPath.set(path, new Set(ids));
 
-    // Collect same-origin images so we can confirm none are broken (e.g. a
-    // mistyped photo filename) without depending on which images exist.
-    const imgSrcs = await page.locator('img[src]').evaluateAll((els) =>
-      els.map((e) => (e as HTMLImageElement).getAttribute('src') ?? '')
+    // Inspect every image: collect same-origin ones for the broken-image check
+    // below, and assert each reserves its layout space up front.
+    const imgs = await page.locator('img').evaluateAll((els) =>
+      els.map((e) => {
+        const img = e as HTMLImageElement;
+        return {
+          src: img.getAttribute('src') ?? '',
+          width: img.getAttribute('width'),
+          height: img.getAttribute('height'),
+          aspectRatio: getComputedStyle(img).aspectRatio,
+        };
+      })
     );
-    for (const src of imgSrcs) {
-      const url = new URL(src, base);
-      if (url.origin === base.origin) imageUrls.add(url.href);
+    for (const img of imgs) {
+      if (img.src) {
+        const url = new URL(img.src, base);
+        if (url.origin === base.origin) imageUrls.add(url.href);
+      }
+      // CLS guard (the deterministic half): an image that loads without reserved
+      // space pushes content down as it arrives. Every image must declare
+      // explicit width+height attributes or a CSS aspect-ratio so the browser
+      // reserves the box before the bytes land.
+      const hasDimensions = Boolean(img.width) && Boolean(img.height);
+      const hasAspectRatio = Boolean(img.aspectRatio) && img.aspectRatio !== 'auto';
+      expect(
+        hasDimensions || hasAspectRatio,
+        `image "${img.src}" on ${path} must declare width+height attributes or a CSS aspect-ratio (prevents layout shift)`
+      ).toBe(true);
     }
 
     const anchors = await page.locator('a[href]').evaluateAll((els) =>
@@ -136,4 +168,8 @@ test('site is structurally healthy across every reachable page', async ({ page, 
   }
 
   expect(jsErrors, 'no page should throw an uncaught JS error').toEqual([]);
+  expect(
+    thirdPartyAssets,
+    'pages should not load CSS or fonts from third-party origins — keep them self-hosted'
+  ).toEqual([]);
 });
