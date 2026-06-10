@@ -1,7 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Greenbriar Technology Group">
-  <rect width="64" height="64" rx="10" fill="#14150f"/>
-  <!-- terminal prompt chevron in mint -->
-  <path d="M16 22 L28 32 L16 42" fill="none" stroke="#2bd49a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- input line / cursor bar in burnt orange -->
-  <rect x="33" y="38" width="16" height="5" rx="2.5" fill="#e2691f"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Greenbriar Technology Group">
+  <rect width="120" height="120" rx="18" fill="#14150f"/>
+  <!-- round G in mint -->
+  <path d="M85.7 31.4 A 40 40 0 1 0 100 62 L86 62" fill="none" stroke="#2bd49a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- the Shanahan Ridge mineshaft headframe in burnt orange, sheltered in the
+       G's bowl: 45° shed roof on the left, center gable, and the half-height
+       landing on the right tucked under the continued gable roof plane -->
+  <polygon points="56,16 84,44 84,58 68,58 68,88 16,88 16,68 44,40 44,28"
+           fill="#e2691f" transform="translate(26 33) scale(0.58)"/>
 </svg>

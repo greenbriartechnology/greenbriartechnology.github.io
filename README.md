@@ -65,8 +65,8 @@ to, drop them in `public/fonts/`, and mirror the `@font-face` block (keeping the
 
 ## Brand icons
 
-`public/favicon.svg` is the single source of truth for the mark (a teletype
-prompt chevron in mint with a burnt-orange cursor bar). The raster derivatives —
+`public/favicon.svg` is the single source of truth for the mark (a mint G
+sheltering the Shanahan Ridge mineshaft headframe in burnt orange). The raster derivatives —
 `public/favicon.ico` (the legacy multi-size fallback, 16/32/48&nbsp;px) and
 `assets/profile.png` (512&nbsp;px, used as the GitHub org avatar and the badge at
 the top of this README) — are generated from it:
