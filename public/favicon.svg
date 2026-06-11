@@ -1,10 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Greenbriar Technology Group">
-  <rect width="120" height="120" rx="18" fill="#14150f"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="11 11 98 98" role="img" aria-label="Greenbriar Technology Group">
+  <!-- transparent background; each shape sits on a slightly fatter dark copy of
+       itself, leaving a thin outline so the mark stays legible on any surface -->
   <!-- round G in mint -->
+  <path d="M85.7 31.4 A 40 40 0 1 0 100 62 L86 62" fill="none" stroke="#14150f" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M85.7 31.4 A 40 40 0 1 0 100 62 L86 62" fill="none" stroke="#2bd49a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
   <!-- the Shanahan Ridge mineshaft headframe in burnt orange, sheltered in the
        G's bowl: 45° shed roof on the left, center gable, and the half-height
        landing on the right tucked under the continued gable roof plane -->
-  <polygon points="56,16 84,44 84,58 68,58 68,88 16,88 16,68 44,40 44,28"
-           fill="#e2691f" transform="translate(26 33) scale(0.58)"/>
+  <g transform="translate(26 33) scale(0.58)">
+    <polygon points="56,16 84,44 84,58 68,58 68,88 16,88 16,68 44,40 44,28"
+             fill="#14150f" stroke="#14150f" stroke-width="5.2" stroke-linejoin="round"/>
+    <polygon points="56,16 84,44 84,58 68,58 68,88 16,88 16,68 44,40 44,28"
+             fill="#e2691f"/>
+  </g>
 </svg>
