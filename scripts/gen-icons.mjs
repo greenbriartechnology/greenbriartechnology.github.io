@@ -20,15 +20,13 @@ import sharp from 'sharp';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const svg = readFileSync(join(root, 'public', 'favicon.svg'));
 
-// The mark sits on a dark rounded square. For raster output we flatten onto that
-// same dark so there are no stray transparent corners (cleaner as an avatar, and
-// the rounded-corner look is reapplied by GitHub's own avatar mask anyway).
-const BG = '#14150f';
+// The mark has a transparent background (each shape carries its own thin dark
+// outline for legibility), so the rasters keep the alpha channel intact.
+const TRANSPARENT = { r: 0, g: 0, b: 0, alpha: 0 };
 
 const png = (size) =>
   sharp(svg, { density: 384 }) // high density so the vector is crisp when scaled
-    .resize(size, size, { fit: 'contain', background: BG })
-    .flatten({ background: BG })
+    .resize(size, size, { fit: 'contain', background: TRANSPARENT })
     .png()
     .toBuffer();
 

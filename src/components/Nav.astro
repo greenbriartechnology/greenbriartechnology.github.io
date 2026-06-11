@@ -10,6 +10,7 @@ const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
     <a class="brand" href="/" aria-label={`${SITE.name} — home`}>
       <span class="brand__prompt">&gt;</span>
       <span class="brand__name">greenbriar technology group</span>
+      <img class="brand__mark" src="/favicon.svg" alt="" width="32" height="32" />
     </a>
 
     <button
@@ -63,12 +64,21 @@ const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
   }
 
   .brand {
+    display: inline-flex;
+    align-items: center;
     font-weight: 700;
     font-size: 1.1rem;
     letter-spacing: -0.02em;
     color: var(--ink);
     border-bottom: none;
     white-space: nowrap;
+  }
+
+  /* As tall as the brand text's line box, so the header height doesn't change */
+  .brand__mark {
+    height: 1.65em;
+    width: auto;
+    margin-left: 0.6ch;
   }
 
   .brand:hover {
